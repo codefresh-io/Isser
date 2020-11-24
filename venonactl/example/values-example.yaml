@@ -77,7 +77,7 @@
 ###############################################
 ### Runner image: controls the runner pod image
 # Image: 
-#   Name: codefresh/venona
+#   Name: quay.io/codefresh/venona
 #   Tag: 1.4.16 # default s.Version.Current.Version,
 
 ### Control runner pod resources

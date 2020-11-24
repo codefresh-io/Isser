@@ -55,7 +55,7 @@ func buildBasicStore(logger logger.Logger) {
 	}
 
 	s.Image = &store.Image{
-		Name: "codefresh/venona",
+		Name: "quay.io/codefresh/venona",
 	}
 
 	s.Mode = store.ModeInCluster
