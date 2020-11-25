@@ -211,16 +211,14 @@ steps:
 
   push:
     type: push
-    title: Push candidate
     stage: Push
     candidate: ${{build_image}}
     tags:
-    - ${{VERSION}}-${{CF_BRANCH_TAG_NORMALIZED}}
-    - ${{VERSION}}-${{CF_REVISION}}
-    - ${{CF_REVISION}}
-    - ${{CF_BRANCH_TAG_NORMALIZED}}
+      - ${{VERSION}}-${{CF_BRANCH_TAG_NORMALIZED}}
+      - ${{VERSION}}-${{CF_REVISION}}
+      - ${{CF_REVISION}}
+      - ${{CF_BRANCH_TAG_NORMALIZED}}
     image_name: codefresh/venona
-    registry: dockerhub
     when:
       steps:
       - name: build_image
@@ -229,4 +227,10 @@ steps:
       - name: export_version
         on:
         - success
-
+    scale:
+      push_to_dockerhub:
+        title: "Push candidate to dockerhub"
+        registry: dockerhub
+      push_to_quay:
+        title: "Push candidate to quay"
+        registry: cf-quay
