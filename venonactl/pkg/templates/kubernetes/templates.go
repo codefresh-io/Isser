@@ -138,7 +138,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: dind-volume-cleanup
-              image: {{ if ne .DockerRegistry ""}} {{- .DockerRegistry }}/codefresh/dind-volume-cleanup {{- else }}codefresh/dind-volume-cleanup {{- end}}
+              image: {{ if ne .DockerRegistry ""}} {{- .DockerRegistry }}/ {{- else }}{{- end}}{{ .Storage.VolumeCleanup.Image | default "codefresh/dind-volume-cleanup" }}
               env:
               - name: PROVISIONED_BY
                 value: codefresh.io/dind-volume-provisioner-{{ .AppName }}-{{ .Namespace }}
@@ -179,7 +179,7 @@ spec:
 
 
       containers:
-        - image: {{ if ne .DockerRegistry ""}} {{- .DockerRegistry }}/codefresh/dind-volume-utils:v5 {{- else }}codefresh/dind-volume-utils:v5{{- end}}
+        - image: {{ if ne .DockerRegistry ""}} {{- .DockerRegistry }}/ {{- else }}{{- end}}{{ .Storage.LocalVolumeMonitor.Image | default "codefresh/dind-volume-utils:v5" }}
           name: lv-cleaner
           resources:
 {{ toYaml .Storage.LocalVolumeMonitor | indent 10 }}
@@ -219,7 +219,8 @@ spec:
       - name: dind-volume-dir
         hostPath:
           path: {{ $localVolumeParentDir }}
-{{- end -}}`
+{{- end -}}
+`
 
 	templatesMap["deployment.app-proxy.yaml"] = `apiVersion: apps/v1
 kind: Deployment
@@ -447,6 +448,14 @@ spec:
       {{- if .Monitor.RbacEnabled}}
       serviceAccountName: {{ .Monitor.AppName }}
       {{- end }}
+      {{ if .NodeSelector }}
+      nodeSelector:
+{{ .NodeSelector | nodeSelectorParamToYaml | indent 8 | unescape}}
+      {{ end }}
+      {{ if .Tolerations }}
+      tolerations:
+{{ toYaml .Tolerations | indent 8}}
+      {{ end }}
       containers:
       - name: {{ .Monitor.AppName }}
         resources:
@@ -676,6 +685,14 @@ metadata:
     app: {{ .AppName }}
     version: {{ .Version }}
 spec:
+{{ if .NodeSelector }}
+  nodeSelector:
+{{ .NodeSelector | nodeSelectorParamToYaml | indent 4 | unescape}}
+  {{ end }}
+{{ if .Tolerations }}
+  tolerations:
+{{ toYaml .Tolerations | indent 4}}
+  {{ end }}
   containers:
   - name: {{ .NetworkTester.PodName }}
     image: {{ if ne .DockerRegistry ""}} {{- .DockerRegistry }}/{{ .NetworkTester.Image.Name }}:{{ .NetworkTester.Image.Tag }} {{- else }} {{- .NetworkTester.Image.Name }}:{{ .NetworkTester.Image.Tag }} {{- end}}

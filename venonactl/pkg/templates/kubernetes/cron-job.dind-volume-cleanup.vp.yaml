@@ -20,7 +20,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: dind-volume-cleanup
-              image: {{ if ne .DockerRegistry ""}} {{- .DockerRegistry }}/codefresh/dind-volume-cleanup {{- else }}codefresh/dind-volume-cleanup {{- end}}
+              image: {{ if ne .DockerRegistry ""}} {{- .DockerRegistry }}/ {{- else }}{{- end}}{{ .Storage.VolumeCleanup.Image | default "codefresh/dind-volume-cleanup" }}
               env:
               - name: PROVISIONED_BY
                 value: codefresh.io/dind-volume-provisioner-{{ .AppName }}-{{ .Namespace }}

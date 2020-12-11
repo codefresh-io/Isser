@@ -148,6 +148,7 @@
 #       Annotations:  # will be set on VolumeProvisioner and LocalVolumeMonitor service account
 #         foo: bar
 #   LocalVolumeMonitor: 
+#     Image:  codefresh/dind-volume-utils:v15
 #     resources:
 #       limits:
 #         cpu: 400m
@@ -155,7 +156,9 @@
 #       requests:
 #         cpu: 200m
 #         memory: 500Mi  
-
+#
+#   VolumeCleanup:
+#     Image:
 
 #######################################
 ### Storage configuration examples: ###
