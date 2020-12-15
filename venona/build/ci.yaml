@@ -15,7 +15,7 @@ steps:
     revision: ${{CF_BRANCH}}
     credentials:
       username: github
-      password: ${{secrets.hybrid.git}}
+      password: '${{secrets.hybrid.git}}'
 
   download_dependencies: &deps
     title: Download Dependencies
