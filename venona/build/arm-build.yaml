@@ -6,9 +6,7 @@ steps:
     type: git-clone
     repo: https://github.com/${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}
     revision: ${{CF_BRANCH}}
-    credentials:
-      username: github
-      password: ${{secrets.hybrid.git}}
+    git: "${{GIT_CONTEXT}}"
 
   build_image:
     title: "Building the image..."
