@@ -11,11 +11,11 @@ steps:
     stage: Clone
     title: Clone repository
     type: git-clone
-    repo: ${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}
+    repo: https://github.com/${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}
     revision: ${{CF_BRANCH}}
     credentials:
       username: github
-      password: '${{secrets.hybrid.git}}'
+      password: ${{secrets.hybrid.git}}
 
   export_version:
     title: Compare version to venona
