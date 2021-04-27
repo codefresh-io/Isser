@@ -20,3 +20,5 @@ require (
 	k8s.io/client-go v0.20.4
 
 )
+
+replace github.com/bketelsen/crypt => github.com/bketelsen/crypt v0.0.3
