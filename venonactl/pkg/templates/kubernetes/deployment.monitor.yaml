@@ -26,6 +26,8 @@ spec:
       {{- if .Monitor.RbacEnabled}}
       serviceAccountName: {{ .Monitor.AppName }}
       {{- end }}
+      nodeSelector:
+        kubernetes.io/arch: amd64
       containers:
       - name: {{ .Monitor.AppName }}
         resources:
