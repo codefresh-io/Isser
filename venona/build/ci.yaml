@@ -98,6 +98,11 @@ steps:
     commands:
       - cd venona && make gocyclo
 
+  printenv:
+    <<: *common
+    title: print env
+    commands:
+      - env
   
   codecov-report:
     type: codecov-reporter
