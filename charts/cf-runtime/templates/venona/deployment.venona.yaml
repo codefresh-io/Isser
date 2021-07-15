@@ -18,6 +18,14 @@ spec:
       labels: {{- include "cf-venona.labels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "cf-venona.fullname" . }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+      {{- end }}      
       {{/*      {{ if ne .Values.nodeSelector "" }}*/}}
       {{/*      nodeSelector:*/}}
       {{/*      {{ .Values.NodeSelector | nodeSelectorParamToYaml | indent 8 | unescape }}*/}}

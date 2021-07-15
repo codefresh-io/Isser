@@ -18,11 +18,18 @@ spec:
       {{/*{{ .Storage.VolumeProvisioner.NodeSelector | nodeSelectorParamToYaml | indent 8 | unescape}}*/}}
       {{/*      {{ end }}*/}}
       serviceAccountName: {{ include "cf-vp.fullname" . }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      {{- end }}
       tolerations:
         - effect: NoSchedule
           key: node-role.kubernetes.io/master
           operator: "Exists"
 
+      {{- if .Values.tolerations }}
+{{ toYaml .Values.tolerations | indent 8 }}
+      {{- end }}      
       {{/*      {{ toYaml .Values.tolerations | indent 8 | unescape}}*/}}
 
       containers:

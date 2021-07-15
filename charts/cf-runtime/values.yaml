@@ -71,8 +71,15 @@ storage:
   #         cpu: 200m
   #         memory: 500Mi
 
-# todo tolerations
-#tolerations: [ ]
+###NodeSelector --kube-node-selector: controls runner(venona), dind-volume-provisioner(vp-provisioner), vp-monitor pods
+#nodeSelector: {"kubernetes.io/arch": "amd64", "failure-domain.beta.kubernetes.io/zone": "us-east-1c"}
+
+### Tolerations --tolerations: controls runner(venona), dind-volume-provisioner(vp-provisioner), vp-monitor pods
+# tolerations: 
+# - key: <key>
+#   operator: Equal
+#   value: <value>
+#   effect: NoSchedule
 
 global:
   namespace: ""

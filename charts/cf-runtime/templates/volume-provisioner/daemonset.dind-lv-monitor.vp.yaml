@@ -20,10 +20,19 @@ spec:
       # hostNetwork: true
       # nodeSelector:
       #   kubernetes.io/role: "node"
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      {{- end }}
       tolerations:
         - key: 'codefresh/dind'
           operator: 'Exists'
           effect: 'NoSchedule'
+      
+      {{- if .Values.tolerations }}
+{{ toYaml .Values.tolerations | indent 8 }}
+      {{- end }}
+
 {{/*      {{ toYaml .Values.tolerations | indent 8}}*/}}
       containers:
         - image: {{ include "cf-vp.docker-image-volume-utils" . }}
